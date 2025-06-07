@@ -1,5 +1,5 @@
 import unittest
-from Qa_bot import load_documents, chunks, embedding, retriever, create_qa_chain
+from Qa_bot import load_documents, chunks, embedding, retriever, create_qa_chain, create_vectorDB
 
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)

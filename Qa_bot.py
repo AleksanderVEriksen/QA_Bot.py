@@ -161,57 +161,9 @@ rag_application = gr.Interface(
     description="Upload a PDF document and ask any question. The chatbot will try to answer using the provided document."
 )
 
-def exercises():
-
-    """Test loading documents from a PDF file."""
-    url = "Test.pdf"
-    web_documents = load_documents(url)
-    print("\nLoaded web document from PDF:\n")
-    print(web_documents[0].page_content[:1000])
-    
-    """Test chunking function with LaTeX text."""
-    latex_text = "Test.tex"
-    latex_docs = chunks(latex_text, lang=True)
-    print("\nChunked LaTeX document:\n")
-    for i, doc in enumerate(latex_docs):
-        print(f"Chunk {i+1}:\n{doc.page_content[:200]}...\n")
-
-    """Test embedding functionality."""
-    query = "How are you?"
-    embeddings_model = embedding()
-    embedded_query = embeddings_model.embed_query(query)
-    print(f"\nEmbedded query with: {query}\n")
-    print(embedded_query[:5])
-
-    """Test vectordb functionality."""
-    doc = "new-Policies.txt"
-    query = "Smoking Policy"
-    doc = load_documents(doc)
-    vector_db = create_vectorDB(doc)
-    search_result = vector_db.similarity_search(query, k=5)
-    print(f"\nRetrieved documents from DB with: {query}\n")
-    for i, result in enumerate(search_result):
-        print(f"Document {i+1}: {result.page_content[:200]}...")
-
-    """Test retriever functionality."""
-    doc = "new-Policies.txt"
-    query = "Smoking Policy"
-    retriever_instance = retriever(doc, k=2)
-    embedded_doc = retriever_instance.invoke(query)
-    print(f"\nRetrieved documents from retriever with: {query}:\n")
-    for i, result in enumerate(embedded_doc):
-        print(f"Document {i+1}: {result.page_content[:200]}...")
-
-
-    """Test the QA chain functionality."""
-    query = "Email policy"
-    response = create_qa_chain(doc, query, k=5)
-    print(f"\nResponse from QA chain with: {query}:\n")
-    print(response)
 
 if __name__ == "__main__":
     # Launch the app
-    #exercises()
     rag_application.launch(server_name="0.0.0.0", server_port= 7860, debug=True)
 
 
